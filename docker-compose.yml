@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: restaurante_db
+    environment:
+      POSTGRES_DB: restaurante_db
+      POSTGRES_USER: restaurante_user
+      POSTGRES_PASSWORD: restaurante_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - restaurante_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U restaurante_user -d restaurante_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: restaurante_api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: restaurante_db
+      DB_USER: restaurante_user
+      DB_PASSWORD: restaurante_pass
+      JWT_SECRET: ${JWT_SECRET:-clave-secreta-de-desarrollo-cambiar-en-produccion-por-favor}
+      JWT_ACCESS_EXPIRATION: 15
+      JWT_REFRESH_EXPIRATION_DAYS: 7
+      JWT_INACTIVITY_MINUTES: 15
+    ports:
+      - "8080:8080"
+
+volumes:
+  restaurante_data:
