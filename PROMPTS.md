@@ -5,6 +5,7 @@ Ayudame con la redacdion de manera correcta y explicativa de los commits
 1. chore: estructura inicial del proyecto Spring Boot con capas
 2. feat: entidades de dominio y repositories JPA
 3. feat: servicios de negocio para pedidos, mesas y usuarios
+4. feat: sistema base, dtos y security base implementados
 
 PROMPT 2: Crea el sistema de Entity y de repository
 
