@@ -2,14 +2,12 @@ package com.uca.pncparcialfinalrestaurante.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "sucursales")
+@Table(name = "productos")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-public class Sucursal {
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +16,8 @@ public class Sucursal {
     @Column(nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
-    private String direccion;
+    private String descripcion;
 
-    @OneToMany(mappedBy = "sucursal", cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<Mesa> mesas = new ArrayList<>();
+    @Column(nullable = false)
+    private BigDecimal precio;
 }
